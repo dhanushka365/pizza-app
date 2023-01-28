@@ -49,6 +49,18 @@ def post_order_details(orderid):#create order
     return response
 
 
+@app.route("/orders/<orderid>", methods=["PUT"])
+def put_order_details(orderid):#create order
+    req = request.get_json()
+    if orderid in order:
+        order[orderid]=req
+        response = make_response(jsonify({"error":"Order Updated"} ),200)
+        return response
+
+    order[orderid]=req
+    response = make_response(jsonify({"message":"new order created"}), 201)
+    return response
+
 
 
 

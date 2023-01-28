@@ -36,5 +36,21 @@ def get_item_details(orderid, items):
         return response
     return "item not Found"    
 
+
+
+@app.route("/orders/<orderid>", methods=["POST"])
+def post_order_details(orderid):#create order
+    req = request.get_json()
+    if orderid in order:
+        response = make_response(jsonify({"error":"Order ID already exist"} ),400)
+        return response
+    order.update({orderid:req})
+    response = make_response(jsonify({"message":"new order created"}), 201)
+    return response
+
+
+
+
+
 if __name__ == '__main__':
     app.run(port=5004,debug=True)

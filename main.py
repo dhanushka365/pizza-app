@@ -1,23 +1,22 @@
 from flask import Flask, make_response, render_template,request,jsonify
 
-app = Flask(__name__)
+app1 = Flask(__name__)
 
-@app.route('/')
+@app1.route('/')
 def hello_world():
     return 'Hello World!'
 
-@app.route('/html')
+@app1.route('/html')
 def get_html():
     return render_template("index.html")
 
 
-@app.route('/qs')
+@app1.route('/qs')
 def get_qs():
     if request.args:
         req = request.args
         return " ".join(f"{k}:{v}" for k,v in req.items())
     return "No query"
-
 
 order = {
     "order1":{
@@ -28,11 +27,11 @@ order = {
 }
 
 
-@app.route("/orders")
+@app1.route("/orders")
 def get_order():
     response = make_response(jsonify(order),200)
     return response
 
 
 if __name__ == '__main__':
-    app.run(port=5004,debug=True)
+    app1.run(port=5004,debug=True)

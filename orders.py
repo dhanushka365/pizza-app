@@ -11,7 +11,7 @@ order = {
 }
 
 
-@app.route("/orders")
+@app.route("/orders/")
 def get_order():
     response = make_response(jsonify(order),200)
     return response
@@ -61,6 +61,28 @@ def put_order_details(orderid):#create order
     response = make_response(jsonify({"message":"new order created"}), 201)
     return response
 
+
+@app.route("/orders/<orderid>", methods=["PATCH"])
+def patch_order_details(orderid):#create order
+    req = request.get_json()
+    if orderid in order:
+        for k,v in req.items():
+            order[orderid][k]=v
+        response = make_response(jsonify({"error":"Order Updated"} ),200)
+        return response
+
+    order[orderid]=req
+    response = make_response(jsonify({"message":"new order created"}), 201)
+    return response
+
+@app.route("/orders/<orderid>", methods=["DELETE"])
+def delete_order_details(orderid):#delete order
+    if orderid in order:
+        del order[orderid]
+        response = make_response(jsonify({"message":"Order Deleted"} ),204)
+        return response
+    response = make_response(jsonify({"error":"Order ID already exist"}), 404)
+    return response
 
 
 

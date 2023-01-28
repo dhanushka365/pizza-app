@@ -27,5 +27,14 @@ def get_order_details(orderid):
         return response
     return "Order not Found"
 
+
+@app.route(("/orders/<orderid>/<items>"))
+def get_item_details(orderid, items):
+    item = order[orderid].get(items)
+    if item:
+        response = make_response(jsonify(item),200)
+        return response
+    return "item not Found"    
+
 if __name__ == '__main__':
     app.run(port=5004,debug=True)

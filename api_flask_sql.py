@@ -56,6 +56,14 @@ def post_order():
     db.session.commit()
     return redirect(url_for("get_order"))
 
+@app.route('/order/<order_id>', methods=["DELETE"])
+def delete_order(order_id):
+    entry = Myapp.query.get_or_404(order_id)
+    db.session.delete(entry)
+    db.session.commit()
+    return redirect(url_for("get_order"))
+
+
 
 if __name__ == '__main__':
     #db.create_all()

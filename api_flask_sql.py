@@ -64,6 +64,16 @@ def delete_order(order_id):
     return redirect(url_for("get_order"))
 
 
+@app.route('/order/<order_id>', methods=["PUT"])
+def update_order(order_id):
+    req = request.get_json()
+    entry = Myapp.query.get(order_id)
+    entry.size =req["size"]
+    entry.toppings =req["toppings"]
+    entry.crust = req["crust"]
+    db.session.add(entry)
+    db.session.commit()
+    return redirect(url_for("get_order"))
 
 if __name__ == '__main__':
     #db.create_all()

@@ -13,9 +13,16 @@ ma = Marshmallow(app)
 
 class Myapp(db.Model):
     order_id = db.Column(db.Integer , primary_key=True)
-    size = db.Column(db.String(500))
-    toppings = db.Column(db.String(500))
-    crust = db.Column(db.String(500))
+    size = db.Column(db.String(500), unique=True, nullable=False)
+    toppings = db.Column(db.String(500), unique=True, nullable=False)
+    crust = db.Column(db.String(500), unique=True, nullable=False)
+
+
+
+with app.app_context():
+    db.create_all()
+
+
 
 class MyAppSchema(ma.Schema):
     class Meta:
@@ -23,13 +30,11 @@ class MyAppSchema(ma.Schema):
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return 'Hello World!'   
 
-@app.route('/create')
-def create():
-    db.create_all()
-    return 'All tables created'    
+
+
 
 if __name__ == '__main__':
     #db.create_all()
-    app.run()
+    app.run(port=5004,debug=True)
